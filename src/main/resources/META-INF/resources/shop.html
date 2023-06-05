@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <h1>Shop</h1>
+        <p>Shop content</p>
+        <form id="search">
+            <input type="text" name="name" placeholder="Name">
+            <input type="submit" value="Add">
+        </form>
+        <ul id="products">
+
+        </ul>
+        <script>
+            const products = document.getElementById('products');
+            const form = document.getElementById('search');
+            const name = form.querySelector('input[name="name"]');
+
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                fetch('/products?name=' + name.value)
+                .then(response => response.json())
+                .then(p => {
+                    p.forEach(product => {
+                        console.log(product);
+                        const li = document.createElement('li');
+                        li.innerHTML = product.name;
+                        products.appendChild(li);
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
